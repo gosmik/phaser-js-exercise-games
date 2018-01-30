@@ -12,6 +12,7 @@ var PhaserGame = function (game) {
 
     this.power = 300;
     this.powerText = null;
+    this.angleText = null;
 
     this.cursors = null;
     this.fireButton = null;
@@ -86,6 +87,10 @@ PhaserGame.prototype = {
         this.powerText = this.add.text(8, 8, 'Power: 300', { font: "18px Arial", fill: "#ffffff" });
         this.powerText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
         this.powerText.fixedToCamera = true;
+
+        this.angleText = this.add.text(8, 40, 'Angle: 300', { font: "18px Arial", fill: "#ffffff" });
+        this.angleText.setShadow(1, 1, 'rgba(0, 0, 0, 0.8)', 1);
+        this.angleText.fixedToCamera = true;
 
         //  Some basic controls
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -204,6 +209,8 @@ PhaserGame.prototype = {
 
             //  Update the text
             this.powerText.text = 'Power: ' + this.power;
+            this.angleText.text = 'Angle: ' + -1*this.turret.angle;
+            
         }
 
     }
