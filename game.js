@@ -13,8 +13,10 @@ var obstacleDelay = 1500;
 var cursors;
 var player;
 
+var bg;
+
 window.onload = function() {	
-	game = new Phaser.Game(320, 480, Phaser.AUTO, "");
+	game = new Phaser.Game(900, 600, Phaser.AUTO, "");
      game.state.add("PlayGame",playGame);
      game.state.start("PlayGame");
 }
@@ -23,13 +25,17 @@ var playGame = function(game){};
 
 playGame.prototype = {
 	preload: function(){
-          game.load.image("road", "road.png");
-          game.load.image("car", "car.png");
-          game.load.image("obstacle", "obstacle.png");
+        game.load.image("bg", "assets/bg.png");
+          game.load.image("road", "assets/road.png");
+          game.load.image("car", "assets/car.png");
+          game.load.image("obstacle", "assets/obstacle.png");
 	},
   	create: function(){
-          game.add.image(0, 0, "road");
+          //game.add.image(0, 0, "road");
+
           game.physics.startSystem(Phaser.Physics.ARCADE);
+
+          bg = game.add.tileSprite(0, 0, 900, 600, 'bg');
           carGroup = game.add.group();
           obstacleGroup = game.add.group();
 
@@ -65,6 +71,8 @@ playGame.prototype = {
 	},
      update: function(){
 
+        bg.tilePosition.y += 2;
+        
         if (cursors.left.isDown)
         {
             //  Move to the left
