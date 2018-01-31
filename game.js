@@ -12,6 +12,8 @@ var obstacleDelay = 1500;
 
 var cursors;
 var player;
+var flame ;
+var fireButton;
 
 var bg;
 
@@ -29,6 +31,7 @@ playGame.prototype = {
           game.load.image("road", "assets/road.png");
           game.load.image("car", "assets/car.png");
           game.load.image("obstacle", "assets/obstacle.png");
+          game.load.image("flame","assets/flame.png");
 	},
   	create: function(){
           //game.add.image(0, 0, "road");
@@ -49,15 +52,24 @@ playGame.prototype = {
 
 
 
-          game.input.onDown.add(moveCar);
+          //game.input.onDown.add(moveCar);
           game.time.events.loop(obstacleDelay, function(){
                var obstacle = new Obstacle(game);
                game.add.existing(obstacle);
                obstacleGroup.add(obstacle);
           });   
+
+          
+        //  When we shoot this little flame sprite will appear briefly at the end of the turret
+        flame = this.add.sprite(0, 0, 'flame');
+        flame.anchor.set(0.5);
+        flame.visible = false;
           
               //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
+
+    fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    fireButton.onDown.add(fire);
 
 	},
      update: function(){
@@ -100,6 +112,22 @@ function moveCar(e){
                cars[carToMove].canMove = true;
           })
      }
+}
+
+function fire(e){
+
+        console.log('fire');
+        //  Now work out where the END of the turret is
+        var p = new Phaser.Point(player.x, player.y-40);
+
+        //  And position the flame sprite there
+        flame.x = p.x;
+        flame.y = p.y;
+        flame.alpha = 1;
+        flame.visible = true;
+
+        //  Boom
+        game.add.tween(flame).to( { alpha: 0 }, 100, "Linear", true);
 }
 
 Obstacle = function (game) {
