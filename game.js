@@ -45,19 +45,10 @@ playGame.prototype = {
         player.anchor.setTo(0.5, 0.5);
         game.physics.enable(player, Phaser.Physics.ARCADE);
 
-          for(var i = 0; i < 2; i++){
-               cars[i] = game.add.sprite(0, game.height - 40, "car");
-               cars[i].positions = [game.width * (i * 4 + 1) / 8, game.width * (i * 4 + 3) / 8];
-               cars[i].anchor.set(0.5);
-               cars[i].tint = carColors[i];  
-               cars[i].canMove = true;
-               cars[i].side = i;
-               cars[i].x = cars[i].positions[cars[i].side];
-               game.physics.enable(cars[i], Phaser.Physics.ARCADE); 
-               cars[i].body.allowRotation = false;
-               cars[i].body.moves = false;  
-               carGroup.add(cars[i]);
-          }
+        player.tint = Math.random() * 0xffffff;
+
+
+
           game.input.onDown.add(moveCar);
           game.time.events.loop(obstacleDelay, function(){
                var obstacle = new Obstacle(game);
@@ -87,9 +78,13 @@ playGame.prototype = {
             console.log('right');
         }
 
-          game.physics.arcade.collide(carGroup, obstacleGroup, function(){
+          /*game.physics.arcade.collide(carGroup, obstacleGroup, function(){
                game.state.start("PlayGame");     
-          });
+          });*/
+
+          game.physics.arcade.collide(player, obstacleGroup, function(){
+            game.state.start("PlayGame");     
+       });
      }
 }
 
