@@ -4,6 +4,8 @@ var cars = [];
 var carColors = [0xff0000, 0x0000ff];
 var carTurnSpeed = 250;
 
+var colorJson = '{"red":"0xff0000", "blue":"0x0000ff","green":"0x00ff00"}';
+
 var carGroup;
 var obstacleGroup;
 
@@ -48,7 +50,7 @@ playGame.prototype = {
         player.anchor.setTo(0.5, 0.5);
         game.physics.enable(player, Phaser.Physics.ARCADE);
 
-        player.tint = Math.random() * 0xffffff;
+        changeCarColor('red');
 
 
 
@@ -137,6 +139,13 @@ Obstacle = function (game) {
      this.anchor.set(0.5);
      this.tint = carColors[Math.floor(position / 2)];
 };
+
+function changeCarColor(_color)
+{
+  var obj = JSON.parse(colorJson);
+  console.log(obj[_color]);
+  player.tint =  obj[_color];
+}
 
 Obstacle.prototype = Object.create(Phaser.Sprite.prototype);
 Obstacle.prototype.constructor = Obstacle;
