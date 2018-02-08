@@ -1,10 +1,9 @@
 var game;
 
 var cars = [];
-var carColors = [0xff0000, 0x0000ff];
 var carTurnSpeed = 250;
 
-var colorJson = '{"red":"0xff0000", "blue":"0x0000ff","green":"0x00ff00"}';
+var colorJson = {"red":"0xff0000", "blue":"0x0000ff","green":"0x00ff00"};
 
 var carGroup;
 var obstacleGroup;
@@ -52,14 +51,12 @@ playGame.prototype = {
 
         changeCarColor('red');
 
-
-
-          //game.input.onDown.add(moveCar);
-          game.time.events.loop(obstacleDelay, function(){
-               var obstacle = new Obstacle(game);
-               game.add.existing(obstacle);
-               obstacleGroup.add(obstacle);
-          });   
+        //game.input.onDown.add(moveCar);
+        game.time.events.loop(obstacleDelay, function(){
+              var obstacle = new Obstacle(game);
+              game.add.existing(obstacle);
+              obstacleGroup.add(obstacle);
+        });   
 
           
         //  When we shoot this little flame sprite will appear briefly at the end of the turret
@@ -67,7 +64,7 @@ playGame.prototype = {
         flame.anchor.set(0.5);
         flame.visible = false;
           
-              //  Our controls.
+    //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
 
     fireButton = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -133,18 +130,22 @@ function fire(e){
 }
 
 Obstacle = function (game) {
-     var position = game.rnd.between(0, 3);
-	Phaser.Sprite.call(this, game, game.width * (position * 2 + 1) / 8, -20, "obstacle");
-	game.physics.enable(this, Phaser.Physics.ARCADE);
+     var position = game.rnd.between(0, Object.keys(colorJson).length-1);
+    Phaser.Sprite.call(this, game, game.width * (position * 2 + 1) / 8, -20, "obstacle");
+    game.physics.enable(this, Phaser.Physics.ARCADE);
      this.anchor.set(0.5);
-     this.tint = carColors[Math.floor(position / 2)];
+     idx = Math.floor(position);
+     var key = Object.keys(colorJson)[idx];
+     value = colorJson[key]
+     console.log("new Obstacle: "+key,value); 
+
+     this.tint = value;
 };
 
 function changeCarColor(_color)
 {
-  var obj = JSON.parse(colorJson);
-  console.log(obj[_color]);
-  player.tint =  obj[_color];
+  console.log("changeCarColor: "+ colorJson[_color]);
+  player.tint =  colorJson[_color];
 }
 
 Obstacle.prototype = Object.create(Phaser.Sprite.prototype);
