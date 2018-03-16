@@ -129,24 +129,26 @@ function fire(e){
         game.add.tween(flame).to( { alpha: 0 }, 100, "Linear", true);
 }
 
-Obstacle = function (game) {
-     var position = game.rnd.between(0, Object.keys(colorJson).length-1);
-    Phaser.Sprite.call(this, game, game.width * (position * 2 + 1) / 8, -20, "obstacle");
-    game.physics.enable(this, Phaser.Physics.ARCADE);
-     this.anchor.set(0.5);
-     idx = Math.floor(position);
-     var key = Object.keys(colorJson)[idx];
-     value = colorJson[key]
-     console.log("new Obstacle: "+key,value); 
 
-     this.tint = value;
-};
 
 function changeCarColor(_color)
 {
   console.log("changeCarColor: "+ colorJson[_color]);
   player.tint =  colorJson[_color];
 }
+
+Obstacle = function (game) {
+  var position = game.rnd.between(0, Object.keys(colorJson).length-1);
+ Phaser.Sprite.call(this, game, game.width * (position * 2 + 1) / 8, -20, "obstacle");
+ game.physics.enable(this, Phaser.Physics.ARCADE);
+  this.anchor.set(0.5);
+  idx = Math.floor(position);
+  var key = Object.keys(colorJson)[idx];
+  value = colorJson[key]
+  console.log("new Obstacle: "+key,value); 
+
+  this.tint = value;
+};
 
 Obstacle.prototype = Object.create(Phaser.Sprite.prototype);
 Obstacle.prototype.constructor = Obstacle;
