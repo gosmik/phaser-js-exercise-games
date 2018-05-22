@@ -28,11 +28,11 @@ var playGame = function(game){};
 
 playGame.prototype = {
 	preload: function(){
-        game.load.image("bg", "assets/bg.png");
-          game.load.image("road", "assets/road.png");
-          game.load.image("car", "assets/car.png");
-          game.load.image("obstacle", "assets/obstacle.png");
-          game.load.image("flame","assets/flame.png");
+        game.load.image("bg", "../assets/bg.png");
+          game.load.image("road", "../assets/road.png");
+          game.load.image("car", "../assets/car.png");
+          game.load.image("obstacle", "../assets/obstacle.png");
+          game.load.image("flame","../assets/flame.png");
 	},
   	create: function(){
           //game.add.image(0, 0, "road");
